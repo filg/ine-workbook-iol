@@ -1,0 +1,50 @@
+/* InterNetworking Experts (INE) R&Sv5 Workbook  NETMAP */
+/* Device to hostname mapping */
+/* R1 -> R1 */
+/* R2 -> R2 */
+/* R3 -> R3 */
+/* R4 -> R4 */
+/* R5 -> R5 */
+/* R6 -> R6 */
+/* R7 -> R7 */
+/* R8 -> R8 */
+/* R9 -> R9 */
+/* R10 -> R10 */
+/* R45 -> R45-Hypervisor */
+
+/* SWITCHES: * R1: * -c R1.txt -e1 -s1 */
+/* SWITCHES: * R2: * -c R2.txt -e1 -s1 */
+/* SWITCHES: * R3: * -c R3.txt -e1 -s1 */
+/* SWITCHES: * R4: * -c R4.txt -e1 -s1 */
+/* SWITCHES: * R5: * -c R5.txt -e1 -s1 */
+/* SWITCHES: * R6: * -c R6.txt -e1 -s1 */
+/* SWITCHES: * R7: * -c R7.txt -e1 -s1 */
+/* SWITCHES: * R8: * -c R8.txt -e1 -s1 */
+/* SWITCHES: * R9: * -c R9.txt -e1 -s1 */
+/* SWITCHES: * R10: * -c R10.txt -e1 -s1 */
+/* SWITCHES: * R45: * -c SW45.txt -e3 -s0 * l2 */
+
+/* IMAGEFILE * INE_topology_Web-IOL.png */
+/* IMAGEMAP * R1: * 398,169,448,204 */
+/* IMAGEMAP * R2: * 398,477,448,512 */
+/* IMAGEMAP * R3: * 226,323,276,358 */
+/* IMAGEMAP * R4: * 570,53,620,88 */
+/* IMAGEMAP * R5: * 913,320,963,355 */
+/* IMAGEMAP * R6: * 226,55,276,90 */
+/* IMAGEMAP * R7: * 51,168,104,204 */
+/* IMAGEMAP * R8: * 740,480,790,515 */
+/* IMAGEMAP * R9: * 51,387,101,322 */
+/* IMAGEMAP * R10: * 913,480,963,515 */
+
+/* Ethernet Network */
+/* Hypervisor */
+45:0/0 1:0/0  /* HYP to R1 */
+45:0/1 2:0/0  /* HYP to R2 */
+45:0/2 3:0/0  /* HYP to R3 */
+45:0/3 4:0/0  /* HYP to R4 */
+45:1/0 5:0/0  /* HYP to R5 */
+45:1/1 6:0/0  /* HYP to R6 */
+45:1/2 7:0/0  /* HYP to R7 */
+45:1/3 8:0/0  /* HYP to R8 */
+45:2/0 9:0/0  /* HYP to R9 */
+45:2/1 10:0/0 /* HYP to R10 */

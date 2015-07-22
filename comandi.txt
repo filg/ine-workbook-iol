@@ -1,0 +1,6 @@
+copia i file nella rispettiva directory.
+git add *
+git commit -m "aggirnato lab X"
+git push origin master
+<password>
+quando devi cambiare lab cambia il link su /labs/templates

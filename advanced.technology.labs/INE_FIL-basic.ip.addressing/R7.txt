@@ -1,6 +1,6 @@
 
 !
-! Last configuration change at 10:07:29 JST Tue Aug 11 2015
+! Last configuration change at 04:18:20 CET Sun Jul 12 2015
 version 15.3
 no service timestamps debug uptime
 no service timestamps log uptime
@@ -14,7 +14,7 @@ boot-end-marker
 !
 !
 no aaa new-model
-clock timezone JST 9 0
+clock timezone CET 1 0
 mmi polling-interval 60
 no mmi auto-configure
 no mmi pvc
@@ -33,6 +33,7 @@ no ip domain lookup
 ip cef
 ipv6 unicast-routing
 ipv6 cef
+ipv6 multicast rpf use-bgp
 !
 multilink bundle-name authenticated
 !
@@ -47,6 +48,14 @@ multilink bundle-name authenticated
 redundancy
 !
 !
+csdb tcp synwait-time 30
+csdb tcp idle-time 3600
+csdb tcp finwait-time 5
+csdb tcp reassembly max-memory 1024
+csdb tcp reassembly max-queue-length 16
+csdb udp idle-time 30
+csdb icmp idle-time 10
+csdb session max-session 65535
 ! 
 !
 !
@@ -117,10 +126,6 @@ interface Serial1/3
  no ip address
  shutdown
  serial restart-delay 0
-!
-router ospf 1
- network 150.1.7.0 0.0.0.255 area 2
- network 155.1.0.0 0.0.255.255 area 2
 !
 ip forward-protocol nd
 !

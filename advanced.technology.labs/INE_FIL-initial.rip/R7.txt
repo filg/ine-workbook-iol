@@ -1,6 +1,6 @@
 
 !
-! Last configuration change at 10:07:29 JST Tue Aug 11 2015
+! Last configuration change at 01:31:55 CET Wed Jul 22 2015
 version 15.3
 no service timestamps debug uptime
 no service timestamps log uptime
@@ -14,7 +14,7 @@ boot-end-marker
 !
 !
 no aaa new-model
-clock timezone JST 9 0
+clock timezone CET 1 0
 mmi polling-interval 60
 no mmi auto-configure
 no mmi pvc
@@ -117,10 +117,6 @@ interface Serial1/3
  no ip address
  shutdown
  serial restart-delay 0
-!
-router ospf 1
- network 150.1.7.0 0.0.0.255 area 2
- network 155.1.0.0 0.0.255.255 area 2
 !
 ip forward-protocol nd
 !

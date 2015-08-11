@@ -1,12 +1,12 @@
 
 !
-! Last configuration change at 10:07:29 JST Tue Aug 11 2015
+! Last configuration change at 01:32:49 CET Wed Jul 22 2015
 version 15.3
 no service timestamps debug uptime
 no service timestamps log uptime
 no service password-encryption
 !
-hostname R7
+hostname R8
 !
 boot-start-marker
 boot-end-marker
@@ -14,7 +14,7 @@ boot-end-marker
 !
 !
 no aaa new-model
-clock timezone JST 9 0
+clock timezone CET 1 0
 mmi polling-interval 60
 no mmi auto-configure
 no mmi pvc
@@ -60,31 +60,26 @@ redundancy
 !
 !
 interface Loopback0
- ip address 150.1.7.7 255.255.255.255
- ipv6 address 2001:150:7:7::7/128
+ ip address 150.1.8.8 255.255.255.255
+ ipv6 address 2001:150:8:8::8/128
 !
 interface Ethernet0/0
  no ip address
 !
-interface Ethernet0/0.7
- encapsulation dot1Q 7
- ip address 155.1.7.7 255.255.255.0
- ipv6 address 2001:155:1:7::7/64
+interface Ethernet0/0.8
+ encapsulation dot1Q 8
+ ip address 155.1.8.8 255.255.255.0
+ ipv6 address 2001:155:1:8::8/64
 !
-interface Ethernet0/0.37
- encapsulation dot1Q 37
- ip address 155.1.37.7 255.255.255.0
- ipv6 address 2001:155:1:37::7/64
+interface Ethernet0/0.58
+ encapsulation dot1Q 58
+ ip address 155.1.58.8 255.255.255.0
+ ipv6 address 2001:155:1:58::8/64
 !
-interface Ethernet0/0.67
- encapsulation dot1Q 67
- ip address 155.1.67.7 255.255.255.0
- ipv6 address 2001:155:1:67::7/64
-!
-interface Ethernet0/0.79
- encapsulation dot1Q 79
- ip address 155.1.79.7 255.255.255.0
- ipv6 address 2001:155:1:79::7/64
+interface Ethernet0/0.108
+ encapsulation dot1Q 108
+ ip address 155.1.108.8 255.255.255.0
+ ipv6 address 2001:155:1:108::8/64
 !
 interface Ethernet0/1
  no ip address
@@ -117,10 +112,6 @@ interface Serial1/3
  no ip address
  shutdown
  serial restart-delay 0
-!
-router ospf 1
- network 150.1.7.0 0.0.0.255 area 2
- network 155.1.0.0 0.0.255.255 area 2
 !
 ip forward-protocol nd
 !

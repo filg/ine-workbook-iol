@@ -1,6 +1,6 @@
 
 !
-! Last configuration change at 10:07:57 JST Tue Aug 11 2015
+! Last configuration change at 01:29:02 CET Wed Jul 22 2015
 version 15.3
 no service timestamps debug uptime
 no service timestamps log uptime
@@ -14,7 +14,7 @@ boot-end-marker
 !
 !
 no aaa new-model
-clock timezone JST 9 0
+clock timezone CET 1 0
 mmi polling-interval 60
 no mmi auto-configure
 no mmi pvc
@@ -87,7 +87,6 @@ interface Tunnel0
  ip nhrp holdtime 300
  ip nhrp nhs 155.1.0.5
  ip tcp adjust-mss 1360
- ip ospf network point-to-multipoint non-broadcast
  tunnel source Ethernet0/0.100
  tunnel mode gre multipoint
  tunnel key 150
@@ -104,6 +103,7 @@ interface Ethernet0/0.13
 interface Ethernet0/0.23
  encapsulation dot1Q 23
  ip address 155.1.23.3 255.255.255.0
+ shutdown
  ipv6 address 2001:155:1:23::3/64
 !
 interface Ethernet0/0.37
@@ -147,13 +147,6 @@ interface Serial1/3
  no ip address
  shutdown
  serial restart-delay 0
-!
-router ospf 1
- network 150.1.3.0 0.0.0.255 area 0
- network 155.1.0.0 0.0.0.255 area 0
- network 155.1.13.0 0.0.0.255 area 4
- network 155.1.23.0 0.0.0.255 area 5
- network 155.1.37.0 0.0.0.255 area 2
 !
 ip forward-protocol nd
 !

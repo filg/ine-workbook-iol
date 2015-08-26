@@ -1,14 +1,9 @@
-
 !
 ! Last configuration change at 17:40:08 UTC Sun Jun 22 2014
 !
-enable
-conf t
-version 15.4
 no service timestamps debug uptime
 no service timestamps log uptime
 no platform punt-keepalive disable-kernel-core
-platform console serial
 !
 hostname R1
 !
@@ -25,8 +20,6 @@ no aaa new-model
 !
 !
 !
-
-
 no ip domain lookup
 !
 !
@@ -44,8 +37,6 @@ subscriber templating
 multilink bundle-name authenticated
 !
 !
-license udi pid CSR1000V sn 9A14DYVY1CC
-license boot level premium
 spanning-tree extend system-id
 !
 !
@@ -105,37 +96,27 @@ interface Tunnel0
  ip tcp adjust-mss 1360
  ip ospf network point-to-point
  ip ospf 1 area 0
- tunnel source GigabitEthernet1.100
+ tunnel source Ethernet0/0.100
  tunnel mode gre multipoint
  tunnel key 150
  tunnel protection ipsec profile DMVPN_PROFILE
 !
-interface GigabitEthernet1
+interface Ethernet0/0
  no shutdown
  negotiation auto
  cdp enable
 !
-no interface GigabitEthernet1.13
+no interface Ethernet0/0.13
 !
-interface GigabitEthernet1.100
+interface Ethernet0/0.100
  encapsulation dot1Q 100
  ip address 169.254.100.1 255.255.255.0
  ipv6 address 2001:169:254:100::1/64
 !
-interface GigabitEthernet1.146
+interface Ethernet0/0.146
  encapsulation dot1Q 146
  ip address 155.1.146.1 255.255.255.0
  ipv6 address 2001:155:1:146::1/64
-!
-interface GigabitEthernet2
- no ip address
- shutdown
- negotiation auto
-!
-interface GigabitEthernet3
- no ip address
- shutdown
- negotiation auto
 !
 !
 router eigrp 100
@@ -146,8 +127,6 @@ router eigrp 100
 router ospf 1
  redistribute eigrp 100 subnets
 !
-!
-virtual-service csr_mgmt
 !
 ip forward-protocol nd
 !
@@ -177,12 +156,6 @@ line vty 1
 line vty 2 4
  privilege level 15
  no login
-end
 !
 copy run bootflash:redistribution.case.1.cfg
-
-
-
-
-
-
+end

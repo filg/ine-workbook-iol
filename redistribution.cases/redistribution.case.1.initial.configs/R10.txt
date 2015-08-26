@@ -1,14 +1,9 @@
-
 !
 ! Last configuration change at 17:40:08 UTC Sun Jun 22 2014
 !
-enable
-conf t
-version 15.4
 no service timestamps debug uptime
 no service timestamps log uptime
 no platform punt-keepalive disable-kernel-core
-platform console serial
 !
 hostname R10
 !
@@ -25,8 +20,6 @@ no aaa new-model
 !
 !
 !
-
-
 no ip domain lookup
 !
 !
@@ -44,8 +37,6 @@ subscriber templating
 multilink bundle-name authenticated
 !
 !
-license udi pid CSR1000V sn 9A14DYVY1CC
-license boot level premium
 spanning-tree extend system-id
 !
 !
@@ -80,35 +71,23 @@ interface Loopback0
  ipv6 address 2001:150:10:10::10/128
  ip ospf 1 area 0
 !
-interface GigabitEthernet1
+interface Ethernet0/0
  no shutdown
  negotiation auto
  cdp enable
 !
-interface GigabitEthernet1.10
+interface Ethernet0/0.10
  encapsulation dot1Q 10
  ip address 155.1.10.10 255.255.255.0
  ipv6 address 2001:155:1:10::10/64
  ip ospf 1 area 0
 !
-interface GigabitEthernet1.108
+interface Ethernet0/0.108
  encapsulation dot1Q 108
  ip address 155.1.108.10 255.255.255.0
  ipv6 address 2001:155:1:108::10/64
  ip ospf 1 area 0
 !
-interface GigabitEthernet2
- no ip address
- shutdown
- negotiation auto
-!
-interface GigabitEthernet3
- no ip address
- shutdown
- negotiation auto
-!
-!
-virtual-service csr_mgmt
 !
 ip forward-protocol nd
 !
@@ -139,9 +118,6 @@ line vty 2 4
  privilege level 15
  no login
 !
-end
 !
 copy run bootflash:redistribution.case.1.cfg
-
-
-
+end

@@ -1,11 +1,16 @@
+
 !
 ! Last configuration change at 17:40:08 UTC Sun Jun 22 2014
 !
+enable
+conf t
+version 15.4
 no service timestamps debug uptime
 no service timestamps log uptime
 no platform punt-keepalive disable-kernel-core
+platform console serial
 !
-hostname R4
+hostname R5
 !
 boot-start-marker
 boot-end-marker
@@ -20,6 +25,8 @@ no aaa new-model
 !
 !
 !
+
+
 no ip domain lookup
 !
 !
@@ -37,6 +44,8 @@ subscriber templating
 multilink bundle-name authenticated
 !
 !
+license udi pid CSR1000V sn 9A14DYVY1CC
+license boot level premium
 spanning-tree extend system-id
 !
 !
@@ -79,48 +88,69 @@ crypto ipsec profile DMVPN_PROFILE
 ! 
 !
 interface Loopback0
- ip address 150.1.4.4 255.255.255.255
+ ip address 150.1.5.5 255.255.255.255
  ip ospf 1 area 0
- ipv6 address 2001:150:4:4::4/128
+ ipv6 address 2001:150:5:5::5/128
 !
 interface Tunnel0
- ip address 155.1.0.4 255.255.255.0
+ ip address 155.1.0.5 255.255.255.0
  no ip redirects
  ip mtu 1400
  ip nhrp authentication NHRPPASS
- ip nhrp map 155.1.0.5 169.254.100.5
- ip nhrp map multicast 169.254.100.5
+ ip nhrp map multicast dynamic
  ip nhrp network-id 1
- ip nhrp holdtime 300
- ip nhrp nhs 155.1.0.5
  ip tcp adjust-mss 1360
- ip ospf network point-to-point
+ ip ospf network point-to-multipoint
+ ip ospf dead-interval 40
+ ip ospf hello-interval 10
  ip ospf 1 area 0
- tunnel source Ethernet0/0.100
+ delay 1000
+ tunnel source GigabitEthernet1.100
  tunnel mode gre multipoint
  tunnel key 150
  tunnel protection ipsec profile DMVPN_PROFILE
 !
-interface Ethernet0/0
+interface GigabitEthernet1
  no shutdown
  negotiation auto
  cdp enable
 !
-interface Ethernet0/0.45
+interface GigabitEthernet1.5
+ encapsulation dot1Q 5
+ ip address 155.1.5.5 255.255.255.0
+ ipv6 address 2001:155:1:5::5/64
+!
+interface GigabitEthernet1.45
  encapsulation dot1Q 45
- ip address 155.1.45.4 255.255.255.0
+ ip address 155.1.45.5 255.255.255.0
  ip ospf 1 area 0
- ipv6 address 2001:155:1:45::4/64
+ ipv6 address 2001:155:1:45::5/64
 !
-interface Ethernet0/0.100
+interface GigabitEthernet1.58
+ encapsulation dot1Q 58
+ ip address 155.1.58.5 255.255.255.0
+ ip ospf 1 area 0
+ ipv6 address 2001:155:1:58::5/64
+!
+interface GigabitEthernet1.100
  encapsulation dot1Q 100
- ip address 169.254.100.4 255.255.255.0
- ipv6 address 2001:169:254:100::4/64
+ ip address 169.254.100.5 255.255.255.0
+ ipv6 address 2001:169:254:100::5/64
 !
-no interface Ethernet0/0.146
+interface GigabitEthernet2
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
 !
 router ospf 1
 !
+!
+virtual-service csr_mgmt
 !
 ip forward-protocol nd
 !
@@ -151,6 +181,9 @@ line vty 2 4
  privilege level 15
  no login
 !
+end
 !
 copy run bootflash:redistribution.case.1.cfg
-end
+
+
+

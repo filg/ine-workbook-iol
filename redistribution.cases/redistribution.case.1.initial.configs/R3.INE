@@ -1,11 +1,16 @@
+
 !
 ! Last configuration change at 17:40:08 UTC Sun Jun 22 2014
 !
+enable
+conf t
+version 15.4
 no service timestamps debug uptime
 no service timestamps log uptime
 no platform punt-keepalive disable-kernel-core
+platform console serial
 !
-hostname R4
+hostname R3
 !
 boot-start-marker
 boot-end-marker
@@ -20,6 +25,8 @@ no aaa new-model
 !
 !
 !
+
+
 no ip domain lookup
 !
 !
@@ -37,6 +44,8 @@ subscriber templating
 multilink bundle-name authenticated
 !
 !
+license udi pid CSR1000V sn 9A14DYVY1CC
+license boot level premium
 spanning-tree extend system-id
 !
 !
@@ -79,12 +88,12 @@ crypto ipsec profile DMVPN_PROFILE
 ! 
 !
 interface Loopback0
- ip address 150.1.4.4 255.255.255.255
+ ip address 150.1.3.3 255.255.255.255
  ip ospf 1 area 0
- ipv6 address 2001:150:4:4::4/128
+ ipv6 address 2001:150:3:3::3/128
 !
 interface Tunnel0
- ip address 155.1.0.4 255.255.255.0
+ ip address 155.1.0.3 255.255.255.0
  no ip redirects
  ip mtu 1400
  ip nhrp authentication NHRPPASS
@@ -96,31 +105,55 @@ interface Tunnel0
  ip tcp adjust-mss 1360
  ip ospf network point-to-point
  ip ospf 1 area 0
- tunnel source Ethernet0/0.100
+ tunnel source GigabitEthernet1.100
  tunnel mode gre multipoint
  tunnel key 150
  tunnel protection ipsec profile DMVPN_PROFILE
 !
-interface Ethernet0/0
+interface GigabitEthernet1
  no shutdown
  negotiation auto
  cdp enable
 !
-interface Ethernet0/0.45
- encapsulation dot1Q 45
- ip address 155.1.45.4 255.255.255.0
+no interface GigabitEthernet1.13
+!
+interface GigabitEthernet1.23
+ encapsulation dot1Q 23
+ ip address 155.1.23.3 255.255.255.0
  ip ospf 1 area 0
- ipv6 address 2001:155:1:45::4/64
+ ipv6 address 2001:155:1:23::3/64
 !
-interface Ethernet0/0.100
+interface GigabitEthernet1.37
+ encapsulation dot1Q 37
+ ip address 155.1.37.3 255.255.255.0
+ ipv6 address 2001:155:1:37::3/64
+!
+interface GigabitEthernet1.100
  encapsulation dot1Q 100
- ip address 169.254.100.4 255.255.255.0
- ipv6 address 2001:169:254:100::4/64
+ ip address 169.254.100.3 255.255.255.0
+ ipv6 address 2001:169:254:100::3/64
 !
-no interface Ethernet0/0.146
+interface GigabitEthernet2
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+!
+!
+router eigrp 100
+ network 150.1.3.3 0.0.0.0
+ network 155.1.13.3 0.0.0.0
+ network 155.1.37.3 0.0.0.0
+ redistribute ospf 1 metric 1000000 1 255 1 1500
 !
 router ospf 1
 !
+!
+virtual-service csr_mgmt
 !
 ip forward-protocol nd
 !
@@ -151,6 +184,9 @@ line vty 2 4
  privilege level 15
  no login
 !
+end
 !
 copy run bootflash:redistribution.case.1.cfg
-end
+
+
+

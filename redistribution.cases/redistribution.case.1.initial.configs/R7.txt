@@ -1,14 +1,9 @@
-
 !
 ! Last configuration change at 17:40:08 UTC Sun Jun 22 2014
 !
-enable
-conf t
-version 15.4
 no service timestamps debug uptime
 no service timestamps log uptime
 no platform punt-keepalive disable-kernel-core
-platform console serial
 !
 hostname R7
 !
@@ -25,8 +20,6 @@ no aaa new-model
 !
 !
 !
-
-
 no ip domain lookup
 !
 !
@@ -44,8 +37,6 @@ subscriber templating
 multilink bundle-name authenticated
 !
 !
-license udi pid CSR1000V sn 9A14DYVY1CC
-license boot level premium
 spanning-tree extend system-id
 !
 !
@@ -79,48 +70,36 @@ interface Loopback0
  ip address 150.1.7.7 255.255.255.255
  ipv6 address 2001:150:7:7::7/128
 !
-interface GigabitEthernet1
+interface Ethernet0/0
  no shutdown
  negotiation auto
  cdp enable
 !
-interface GigabitEthernet1.7
+interface Ethernet0/0.7
  encapsulation dot1Q 7
  ip address 155.1.7.7 255.255.255.0
  ipv6 address 2001:155:1:7::7/64
 !
-interface GigabitEthernet1.37
+interface Ethernet0/0.37
  encapsulation dot1Q 37
  ip address 155.1.37.7 255.255.255.0
  ipv6 address 2001:155:1:37::7/64
 !
-interface GigabitEthernet1.67
+interface Ethernet0/0.67
  encapsulation dot1Q 67
  ip address 155.1.67.7 255.255.255.0
  ipv6 address 2001:155:1:67::7/64
 !
-interface GigabitEthernet1.79
+interface Ethernet0/0.79
  encapsulation dot1Q 79
  ip address 155.1.79.7 255.255.255.0
  ipv6 address 2001:155:1:79::7/64
-!
-interface GigabitEthernet2
- no ip address
- shutdown
- negotiation auto
-!
-interface GigabitEthernet3
- no ip address
- shutdown
- negotiation auto
 !
 !
 router eigrp 100
  network 150.1.0.0
  network 155.1.0.0
 !
-!
-virtual-service csr_mgmt
 !
 ip forward-protocol nd
 !
@@ -151,9 +130,6 @@ line vty 2 4
  privilege level 15
  no login
 !
-end
 !
 copy run bootflash:redistribution.case.1.cfg
-
-
-
+end

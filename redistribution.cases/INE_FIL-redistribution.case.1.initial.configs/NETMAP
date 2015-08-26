@@ -24,7 +24,7 @@
 /* SWITCHES: * R10: * -c R10.txt -e1 -s1 */
 /* SWITCHES: * R45: * -c SW45.txt -e3 -s0 * l2 */
 
-/* IMAGEFILE * INE_topology_Web-IOL.png */
+/* IMAGEFILE * INE_topology_REDIST1_Web-IOL.png */
 /* IMAGEMAP * R1: * 398,169,448,204 */
 /* IMAGEMAP * R2: * 398,477,448,512 */
 /* IMAGEMAP * R3: * 226,323,276,358 */

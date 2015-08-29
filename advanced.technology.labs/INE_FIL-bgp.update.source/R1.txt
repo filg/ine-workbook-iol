@@ -1,11 +1,10 @@
-!
-!
 
-enable
-conf t
+!
+! Last configuration change at 01:26:03 JST Sun Aug 30 2015
+version 15.3
 no service timestamps debug uptime
 no service timestamps log uptime
-no platform punt-keepalive disable-kernel-core
+no service password-encryption
 !
 hostname R1
 !
@@ -15,46 +14,40 @@ boot-end-marker
 !
 !
 no aaa new-model
-!
-!
-!
+clock timezone JST 9 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
 !
 !
 !
 !
 
 
+!
+!
+!
+!
 no ip domain lookup
-!
-!
-!
+ip cef
 ipv6 unicast-routing
-!
-!
-!
-!
-!
-!
-!
-subscriber templating
+ipv6 cef
 !
 multilink bundle-name authenticated
 !
 !
-spanning-tree extend system-id
 !
-!
-redundancy
- mode none
 !
 !
 !
 !
 !
-cdp run
+!
+redundancy
+!
 !
 ! 
-!
 !
 !
 !
@@ -78,8 +71,6 @@ crypto ipsec profile DMVPN_PROFILE
 !
 !
 !
-! 
-! 
 !
 interface Loopback0
  ip address 150.1.1.1 255.255.255.255
@@ -103,8 +94,6 @@ interface Tunnel0
 !
 interface Ethernet0/0
  no ip address
- negotiation auto
- cdp enable
 !
 interface Ethernet0/0.13
  encapsulation dot1Q 13
@@ -120,6 +109,38 @@ interface Ethernet0/0.146
  encapsulation dot1Q 146
  ip address 155.1.146.1 255.255.255.0
  ipv6 address 2001:155:1:146::1/64
+!
+interface Ethernet0/1
+ no ip address
+ shutdown
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+interface Serial1/0
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial1/1
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial1/2
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial1/3
+ no ip address
+ shutdown
+ serial restart-delay 0
 !
 !
 router eigrp 100
@@ -137,20 +158,30 @@ router bgp 100
  neighbor 155.1.67.7 remote-as 100
  neighbor 155.1.146.6 remote-as 100
 !
-!
-!
 ip forward-protocol nd
+!
 !
 no ip http server
 no ip http secure-server
 !
+!
+!
 access-list 100 permit tcp host 155.1.0.2 host 155.1.0.1
 access-list 100 permit tcp host 155.1.0.1 host 155.1.0.2
 !
-!
-!
 control-plane
 !
+!
+!
+!
+!
+!
+alias exec ss show run | s 
+alias exec c conf t
+alias exec sr sh ip route 
+alias exec si sh ip int brief
+alias exec so sh ip ospf 
+alias exec se show ip eigrp
 !
 line con 0
  exec-timeout 0 0
@@ -162,9 +193,7 @@ line aux 0
 line vty 0 4
  privilege level 15
  no login
+ transport input all
 !
-!
-end
-
 !
 end
